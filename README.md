@@ -6,6 +6,9 @@ This small Java EE app supports the lab [HTTP Session Replication Lab for the Ap
 
 You'll use an Open Source JCache provider called [Hazelcast](https://github.com/hazelcast/hazelcast) to provide the implementation of the JCache support that is included in Open Liberty. Any compliant JSR 107 product can be used in this manner with Open Liberty.
 
+This app can be used with the following JSR providers:
+- [Infinispan](https://infinispan.org) - Open Source, subset of [Red Hat Data Grid](https://www.redhat.com/en/technologies/jboss-middleware/data-grid) (comes with [IBM Cloud Pak for Applications](https://www.ibm.com/cloud/cloud-pak-for-applications))
+- [Hazelcast](https://github.com/hazelcast/hazelcast) - Open Source - upstream version of Hazelcast's commercial offering
 
 ### Building the app
 
@@ -23,4 +26,3 @@ This will create the app's *.ear* file in the **target** subfolder.
 ### Running the app
 
 Refer to the [lab instructions](https://github.com/IBMAppModernization/app-modernization-session-replication-openshift) in the accompanying lab exercise to run the app on OpenShift.
-    
