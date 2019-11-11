@@ -72,7 +72,7 @@ objects:
         dockerfilePath: "${DOCKERFILE}"
         env:
         - name: OPENSHIFT_PROJECT
-          value: "changeme"
+          value: srpl-user012
         from:
           kind: ImageStreamTag
           name: websphere-liberty:kernel
@@ -99,6 +99,7 @@ objects:
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
     labels:
+      infinispan: liberty-runtime-infinispan-embedded
       deploymentConfig: "${APPLICATION_NAME}"
   spec:
     strategy:
@@ -197,5 +198,5 @@ objects:
       protocol: TCP
       port: 7800
     selector:
-      deploymentConfig: "${APPLICATION_NAME}"
+      infinispan: liberty-runtime-infinispan-embedded
     sessionAffinity: None
