@@ -1,8 +1,11 @@
 # IMAGE: Get the base image for Liberty
-FROM clouddragons/webpshere-liberty-centos:19.0.0.9-kernel
+FROM clouddragons/websphere-liberty-centos:19.0.0.9-kernel
 
+ENV OPENSHIFT_PROJECT srpl-user012
 
 # Add Infinispan config
+COPY wlp/config/jvm.options /opt/ibm/wlp/usr/servers/defaultServer/jvm.options
+RUN sed -i"_x" "s/changeme/${OPENSHIFT_PROJECT}/g" /opt/ibm/wlp/usr/servers/defaultServer/jvm.options  && rm /opt/ibm/wlp/usr/servers/defaultServer/jvm.options_x
 RUN mkdir opt/ibm/wlp/usr/shared/config/infinispan
 COPY wlp/usr/shared/config/infinispan/*.xml /opt/ibm/wlp/usr/shared/config/infinispan/
 USER root
@@ -11,18 +14,20 @@ USER 1001
 
 # Add Infinispan jar
 RUN mkdir /opt/ibm/wlp/usr/shared/resources/infinispan
-COPY wlp/usr/shared/resources/infinispan/infinispan-jcache-9.4.16.Final.jar /opt/ibm/wlp/usr/shared/resources/infinispan/
+COPY wlp/usr/shared/resources/infinispan/*.jar /opt/ibm/wlp/usr/shared/resources/infinispan/
 USER root
 RUN chown 1001:0 /opt/ibm/wlp/usr/shared/resources/infinispan/*.jar
 USER 1001
 
-#BINARIES: Add in all necessary application binaries
-COPY wlp/config/server.xml /config
+# Add server.xml
+COPY wlp/config/server.Infinispan.xml /config/server.xml
 USER root
 RUN chown 1001:0 /config/server.xml
 USER 1001
 
 RUN configure.sh
 
-
+# BINARIES: Add in all necessary application binaries
 ADD target/ss-jee7.ear /opt/ibm/wlp/usr/servers/defaultServer/apps
+
+EXPOSE 7800
