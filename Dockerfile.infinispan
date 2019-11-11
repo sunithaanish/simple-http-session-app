@@ -1,0 +1,28 @@
+# IMAGE: Get the base image for Liberty
+FROM clouddragons/webpshere-liberty-centos:19.0.0.9-kernel
+
+
+# Add Infinispan config
+RUN mkdir opt/ibm/wlp/usr/shared/config/infinispan
+COPY wlp/usr/shared/config/infinispan/*.xml /opt/ibm/wlp/usr/shared/config/infinispan/
+USER root
+RUN chown 1001:0 /opt/ibm/wlp/usr/shared/config/infinispan/*.xml
+USER 1001
+
+# Add Infinispan jar
+RUN mkdir /opt/ibm/wlp/usr/shared/resources/infinispan
+COPY wlp/usr/shared/resources/infinispan/infinispan-jcache-9.4.16.Final.jar /opt/ibm/wlp/usr/shared/resources/infinispan/
+USER root
+RUN chown 1001:0 /opt/ibm/wlp/usr/shared/resources/infinispan/*.jar
+USER 1001
+
+#BINARIES: Add in all necessary application binaries
+COPY wlp/config/server.xml /config
+USER root
+RUN chown 1001:0 /config/server.xml
+USER 1001
+
+RUN configure.sh
+
+
+ADD target/ss-jee7.ear /opt/ibm/wlp/usr/servers/defaultServer/apps
