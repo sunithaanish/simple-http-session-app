@@ -23,13 +23,13 @@ parameters:
   value: ''
   required: false
 - name: INFINISPAN_USER
-  description: Infinispan server credentials
-  displayName: Infinispan server credentials
+  description: Infinispan server user
+  displayName: Infinispan server user
   value: 'libertyUser'
   required: true
 - name: INFINISPAN_PASSWORD
-  description: Infinispan server credentials
-  displayName: Infinispan server credentials
+  description: Infinispan server password
+  displayName: Infinispan server password
   value: 'libertyPassword'
   required: true
 - name: GENERIC_TRIGGER_SECRET
