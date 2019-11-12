@@ -23,6 +23,7 @@ public class SessionServlet extends HttpServlet {
     String title = "Simple HttpSession Demo";
     String heading;
     String serverIPAddress = "Unknown";
+    String serverHost = "Unknown";
     Integer accessCount = new Integer(0);;
     if (session.isNew()) {
       heading = "Hello stranger";
@@ -41,6 +42,7 @@ public class SessionServlet extends HttpServlet {
     try {
        InetAddress localhost = InetAddress.getLocalHost();
        serverIPAddress = localhost.getHostAddress().trim();
+       serverHost = localhost.getHostName();
     }
     catch (UnknownHostException e) {
         System.err.println("Error: cannot get server IP Address  : " + e.getMessage());
@@ -73,6 +75,10 @@ public class SessionServlet extends HttpServlet {
                 "<TR>\n" +
                 "  <TD>Number of previous accesses</TD>\n" +
                 "  <TD>" + accessCount + "</TD>\n" +
+                "</TR>\n" +
+                "<TR>\n" +
+                "  <TD>POD Name</TD>\n" +
+                "  <TD>" + serverHost + "</TD>\n" +
                 "</TR>\n" +
                 "<TR>\n" +
                 "  <TD>POD IP address</TD>\n" +

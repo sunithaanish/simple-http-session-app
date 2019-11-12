@@ -25,7 +25,22 @@ parameters:
 - name: REPLICAS
   description: Number of replicas to spin up
   displayName: Number of replicas to spin up
-  value: '3'
+  value: '2'
+  required: true
+- name: INFINISPAN_USER
+  description: Infinispan server credentials
+  displayName: Infinispan server credentials
+  value: 'libertyUser'
+  required: true
+- name: INFINISPAN_PASSWORD
+  description: Infinispan server credentials
+  displayName: Infinispan server credentials
+  value: 'libertyPassword'
+  required: true
+- name: INFINISPAN_HOST
+  description: Infinispan server hostname
+  displayName: Infinispan server hostname
+  value: 'infinispan-server'
   required: true
 - name: GIT_URI
   description: Git source URI for application
@@ -70,9 +85,6 @@ objects:
       type: Docker
       dockerStrategy:
         dockerfilePath: "${DOCKERFILE}"
-        env:
-        - name: OPENSHIFT_PROJECT
-          value: srpl-user012
         from:
           kind: ImageStreamTag
           name: websphere-liberty:microProfile3
@@ -130,15 +142,6 @@ objects:
           - name: http
             containerPort: 9080
             protocol: TCP
-          - name: https
-            containerPort: 9443
-            protocol: TCP
-          - name: infinispan
-            containerPort: 7800
-            protocol: TCP
-          - name: debug
-            containerPort: 7777
-            protocol: TCP
           readinessProbe:
             httpGet:
               path: /ready
@@ -146,6 +149,13 @@ objects:
             initialDelaySeconds: 15
             timeoutSeconds: 2
             periodSeconds: 10
+          env:
+          - name: INFINISPAN_HOST
+            value: "${INFINISPAN_HOST}"
+          - name: INFINISPAN_USER
+            value: "${INFINISPAN_USER}"
+          - name: INFINISPAN_PASSWORD
+            value: "${INFINISPAN_PASSWORD}"            
           resources:
             limits:
               cpu: 300m
@@ -168,8 +178,6 @@ objects:
       haproxy.router.openshift.io/disable_cookies: 'true'
   spec:
     host: "${APPLICATION_HOSTNAME}"
-    tls:
-      termination: Re-encrypt
     to:
       kind: Service
       name: "${APPLICATION_NAME}"
@@ -186,17 +194,3 @@ objects:
       targetPort: 9080
     selector:
       deploymentConfig: "${APPLICATION_NAME}"
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: infinispan-embedded
-    annotations:
-      description: Infinispan port
-  spec:
-    ports:
-    - name: discovery
-      protocol: TCP
-      port: 7800
-    selector:
-      infinispan: liberty-runtime-infinispan-embedded
-    sessionAffinity: None

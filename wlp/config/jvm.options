@@ -1,2 +1,1 @@
--Djava.net.preferIPv4Stack=true
--Djgroups.dns.query=infinispan-embedded.changeme.svc.cluster.local
+-Dinfinispan.deserialization.whitelist.regexps=.*

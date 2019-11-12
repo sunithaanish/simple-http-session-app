@@ -1,16 +1,8 @@
 # IMAGE: Get the base image for Liberty
-FROM clouddragons/websphere-liberty-centos:19.0.0.9-microProfile3
-
-#ENV OPENSHIFT_PROJECT srpl-user012
+FROM open-liberty
 
 # Add Infinispan config
 COPY wlp/config/jvm.options /opt/ibm/wlp/usr/servers/defaultServer/jvm.options
-RUN sed -i"_x" "s/changeme/${OPENSHIFT_PROJECT}/g" /opt/ibm/wlp/usr/servers/defaultServer/jvm.options  && rm /opt/ibm/wlp/usr/servers/defaultServer/jvm.options_x
-RUN mkdir opt/ibm/wlp/usr/shared/config/infinispan
-COPY wlp/usr/shared/config/infinispan/*.xml /opt/ibm/wlp/usr/shared/config/infinispan/
-USER root
-RUN chown 1001:0 /opt/ibm/wlp/usr/shared/config/infinispan/*.xml
-USER 1001
 
 # Add Infinispan jars
 RUN mkdir /opt/ibm/wlp/usr/shared/resources/infinispan
