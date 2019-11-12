@@ -49,6 +49,7 @@
 				<configuration>
 					<packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
 					<warName>ss-web</warName>
+					<outputDirectory>${project.parent.build.directory}</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

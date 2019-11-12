@@ -22,6 +22,9 @@
   <fileset dir="${shared.resource.dir}/infinispan" includes="*.jar"/>
 </library>
 
-<applicationManager autoExpand="true"/>
-<application id="simple-session-jee7" name="simple-session" location="ss-jee7.ear"/>
+<!-- <applicationManager autoExpand="true"/>
+<application id="simple-session-jee7" name="simple-session" location="ss-jee7.ear"/> -->
+
+<webApplication contextRoot="/" location="ss-web.war" />
+
 </server>

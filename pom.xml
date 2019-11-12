@@ -11,7 +11,7 @@
 
 	<modules>
 		<module>ss-web</module>
-		<module>ss-ear</module>
+		<!--<module>ss-ear</module>-->
 	</modules>
 
 	<build>

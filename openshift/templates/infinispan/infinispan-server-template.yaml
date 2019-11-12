@@ -22,6 +22,16 @@ parameters:
   description: 'Custom hostname for service routes.  Leave blank for default hostname, e.g.: <application-name>.<project>.<default-domain-suffix>'
   value: ''
   required: false
+- name: INFINISPAN_USER
+  description: Infinispan server credentials
+  displayName: Infinispan server credentials
+  value: 'libertyUser'
+  required: true
+- name: INFINISPAN_PASSWORD
+  description: Infinispan server credentials
+  displayName: Infinispan server credentials
+  value: 'libertyPassword'
+  required: true
 - name: GENERIC_TRIGGER_SECRET
   displayName: Generic build trigger secret
   description: Generic build trigger secret
@@ -72,6 +82,11 @@ objects:
             protocol: TCP
           - containerPort: 57600
             protocol: TCP
+          env:
+          - name: USER
+            value: "${INFINISPAN_USER}"
+          - name: PASS
+            value: "${INFINISPAN_PASSWORD}"
           resources:
             limits:
               cpu: 300m
