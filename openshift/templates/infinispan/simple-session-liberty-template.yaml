@@ -75,7 +75,7 @@ objects:
           value: srpl-user012
         from:
           kind: ImageStreamTag
-          name: websphere-liberty:kernel
+          name: websphere-liberty:microProfile3
     output:
       to:
         kind: ImageStreamTag
