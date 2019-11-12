@@ -21,5 +21,3 @@ USER 1001
 
 # BINARIES: Add in all necessary application binaries
 ADD target/ss-jee7.ear /opt/ibm/wlp/usr/servers/defaultServer/apps
-
-EXPOSE 7800

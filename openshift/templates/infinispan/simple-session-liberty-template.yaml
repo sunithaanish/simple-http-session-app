@@ -87,7 +87,7 @@ objects:
         dockerfilePath: "${DOCKERFILE}"
         from:
           kind: ImageStreamTag
-          name: websphere-liberty:microProfile3
+          name: open-liberty:latest
     output:
       to:
         kind: ImageStreamTag
@@ -103,7 +103,6 @@ objects:
     dockerImageRepository: ''
     tags:
     - tag: latest
-
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -111,7 +110,6 @@ objects:
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
     labels:
-      infinispan: liberty-runtime-infinispan-embedded
       deploymentConfig: "${APPLICATION_NAME}"
   spec:
     strategy:
@@ -155,7 +153,7 @@ objects:
           - name: INFINISPAN_USER
             value: "${INFINISPAN_USER}"
           - name: INFINISPAN_PASSWORD
-            value: "${INFINISPAN_PASSWORD}"            
+            value: "${INFINISPAN_PASSWORD}"
           resources:
             limits:
               cpu: 300m
