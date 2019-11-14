@@ -2,7 +2,7 @@
 FROM open-liberty
 
 # Add Infinispan config
-COPY wlp/config/jvm.options /opt/ol/wlp/usr/servers/defaultServer/jvm.options
+COPY wlp/config/jvm.inifinispan.options /opt/ol/wlp/usr/servers/defaultServer/jvm.options
 
 # Add Infinispan jars
 RUN mkdir /opt/ol/wlp/usr/shared/resources/infinispan
