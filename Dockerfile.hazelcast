@@ -1,5 +1,5 @@
 #IMAGE: Get the base image for Liberty
-FROM clouddragons/webpshere-liberty-centos:19.0.0.9-kernel
+FROM ibmcom/websphere-liberty:kernel-java8-openj9-ubi
 
 
 # Add Hazelcast config
